@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from dotenv import dotenv_values
 from pymongo import MongoClient
+from routes import router as highscore_router
 
 config = dotenv_values(".env")
 
@@ -15,3 +16,5 @@ def startup_db_client():
 @app.on_event("shutdown")
 def shutdown_db_client():
     app.mongodb_client.close()
+
+app.include_router(highscore_router, tags=["highscores"], prefix="/highscores")

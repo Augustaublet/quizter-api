@@ -17,4 +17,4 @@ def startup_db_client():
 def shutdown_db_client():
     app.mongodb_client.close()
 
-app.include_router(highscore_router, tags=["highscores"], prefix="/highscores")
+app.include_router(highscore_router, tags=["scores"], prefix="/scores")

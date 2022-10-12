@@ -40,3 +40,21 @@ class HighscoreUpdate(BaseModel):
                 "numberOfQuestions": 15,
             }
         }
+class HighscoreHighest(BaseModel):
+    difficulty: Optional[str]
+    
+    class Config:
+        schema_extra = {
+            "example":{
+                "difficulty":"medium",
+            }
+        }
+
+class HighscoreDeleteAll(BaseModel):
+    confirm: bool
+    class Config:
+        schema_extra = {
+            "example": {
+                "confirm": True
+            }
+        }

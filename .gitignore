@@ -1,1 +1,3 @@
-
+quizter-env/
+__pycache__/
+.env

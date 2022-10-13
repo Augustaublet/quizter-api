@@ -1,4 +1,3 @@
-from lib2to3.pgen2.token import OP
 import uuid
 from typing import Optional
 from pydantic import BaseModel, Field

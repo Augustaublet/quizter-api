@@ -16,13 +16,17 @@ def add_highscore(request: Request, newHighScore: Highscore = Body(...)):
     )
     return added_highscore
 
-@router.post("/highscore", response_description="Get the highest 10", response_model= HighscoreHighest)
-def get_top_ten(request:Request, respons: HighscoreHighest=Body(...)):
-    difficulty = jsonable_encoder(respons)
-    print(difficulty)
-    # highscores = request.app.database["highscores"].find({"difficulty":difficulty}).sort({"score":-1})
-
-    return "highscores"
+@router.get("/highscore", response_description="Get the highest 10",)
+def get_top_ten(request:Request):
+    easy = list(request.app.database["highscores"].find({"difficulty":"easy"}).limit(10).sort("score",-1))
+    medium = list(request.app.database["highscores"].find({"difficulty":"medium"}).limit(10).sort("score",-1))
+    hard = list(request.app.database["highscores"].find({"difficulty":"hard"}).limit(10).sort("score",-1))
+    respons = {
+        "easy":easy,
+        "medium":medium,
+        "hard":hard
+    }
+    return respons
 
 
 
@@ -31,8 +35,8 @@ def list_all_highscores(request:Request):
     highscores = list(request.app.database["highscores"].find(limit=100))
     return highscores
 
-@router.delete("/{id}",response_description="Delete a highscore", response_model=List[Highscore])
-def delete_highsore(request:Request):
+@router.delete("/{id}", response_description="Delete a highscore")
+def delete_highsore(id: str, request:Request, response:Response):
     delete_result = request.app.database["highscores"].delete_one({"_id":id})
 
     if delete_result.deleted_count == 1:
@@ -41,10 +45,10 @@ def delete_highsore(request:Request):
     
     raise HTTPException(staus_code=status.HRRP_404_NOT_FOUND, detail=f"Highscore with {id} not found")
 
-@router.delete("/all", response_description="Delete all Highscores", response_model=Highscore)
+@router.delete("/all", response_description="Delete all Highscores")
 def delete_all_highscores(request:Request, respons: HighscoreDeleteAll = Body(...)):
     if respons.confirm:
-        delete_respons = request.app.database["highscores"].delete_many({{score:{"$gt":0}}})
+        delete_respons = request.app.database["highscores"].delete_many({"score":{"$gt":0}})
         return f"{delete_respons.deleted_count} documents deletet."
     
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"You must confirm delete.")

@@ -1,12 +1,12 @@
 import uuid
-from typing import Optional
+
 from pydantic import BaseModel, Field
 
 class Highscore(BaseModel):
     id: str = Field(default_factory=uuid.uuid4, alias="_id")
     playerName: str = Field(...)
     difficulty: str = Field(...)
-    #categories
+    categories: list[str] = []
     score: int = Field(...)
     longestStreak: int = Field(...)
     numberOfQuestions: int = Field(...)
@@ -21,40 +21,6 @@ class Highscore(BaseModel):
                 "score": 12,
                 "longestStreak": 4,
                 "numberOfQuestions": 15,
-            }
-        }
-class HighscoreUpdate(BaseModel):
-    name: Optional[str]
-    difficulty: Optional[str]
-    score: Optional[int]
-    longestStreak: Optional[int]
-    numberOfQuestions: Optional[int]
-
-    class Config:
-        schema_extra = {
-            "example": {
-                "playerName": "Kalle Anka",
-                "difficulty": "medium",
-                "score": 12,
-                "longestStreak": 4,
-                "numberOfQuestions": 15,
-            }
-        }
-class HighscoreHighest(BaseModel):
-    difficulty: Optional[str]
-    
-    class Config:
-        schema_extra = {
-            "example":{
-                "difficulty":"medium",
-            }
-        }
-
-class HighscoreDeleteAll(BaseModel):
-    confirm: bool
-    class Config:
-        schema_extra = {
-            "example": {
-                "confirm": True
+                "categories": ["Sports", "History"]
             }
         }

@@ -13,7 +13,6 @@ Jinja2==3.1.2
 MarkupSafe==2.1.1
 orjson==3.8.0
 pydantic==1.10.2
-pymongo==4.2.0
 python-dotenv==0.21.0
 python-multipart==0.0.5
 PyYAML==6.0
@@ -27,4 +26,4 @@ urllib3==1.26.12
 uvicorn==0.18.3
 uvloop==0.17.0
 watchfiles==0.17.0
-websockets==10.3
+

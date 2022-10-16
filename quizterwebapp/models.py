@@ -20,5 +20,6 @@ class Score(BaseModel):
                 "score": 12,
                 "longestStreak": 4,
                 "numberOfQuestions": 15,
+                "categories":["art", "sport"]
             }
         }

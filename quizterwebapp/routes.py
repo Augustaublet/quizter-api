@@ -1,7 +1,5 @@
-from urllib import response
-from fastapi import APIRouter, Body, Request, Response, HTTPException, status
+from fastapi import APIRouter, Body, HTTPException, status
 from fastapi.encoders import jsonable_encoder
-from typing import List
 from deta import Deta
 from dotenv import dotenv_values
 
@@ -41,7 +39,7 @@ def get_top_ten():
 
 
 
-@router.get("/", response_description="List all Highscores", response_model=List[Score])
+@router.get("/", response_description="List all Scores")
 def list_all_highscores():
     scores = db.fetch()
     return scores.items
